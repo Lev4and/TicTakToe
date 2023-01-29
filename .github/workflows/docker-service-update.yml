@@ -1,0 +1,27 @@
+name: Docker Service Update
+
+on:
+  workflow_run:
+    workflows: [ Docker Release Image Build/Push ]
+    types: [ completed ]
+
+jobs:
+  vue-js-app-update:
+    name: update service vue-js-app
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update Docker service
+        uses: satak/webrequest-action@master
+        with:
+          url: http://lev4and.ru/portainer/api/webhooks/7c8d501d-d7b9-458a-ad49-33914316e960
+          method: POST
+  
+  web-app-update:
+    name: update service web-app
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update Docker service
+        uses: satak/webrequest-action@master
+        with:
+          url: http://lev4and.ru/portainer/api/webhooks/007dd104-e820-4d1f-9be2-0e731d1a20ef
+          method: POST

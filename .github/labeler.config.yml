@@ -1,0 +1,48 @@
+csharp:
+  - "*/**/*.cs"
+
+backend:
+  - "*/**/*.cs"
+
+tests:
+  - "*/**/*Tests*"
+  - "*/**/tests/**/*"
+
+design:
+  - "*/**/*.scss"
+  - "*/**/*.css"
+
+css:
+  - "*/**/*.css"
+
+scss:
+  - "*/**/*.scss"
+
+api:
+  - "*/**/*.cs"
+  - "*/**/api/**/*"
+
+javascript:
+  - "*/**/*.js"
+
+typescript:
+  - "*/**/*.ts"
+
+vue:
+  - "*/**/*.vue"
+
+docker:
+  - "*/**/Dockerfile"
+
+production:
+  - "*/**/Dockerfile"
+
+frontend:
+  - "*/**/*.js"
+  - "*/**/*.ts"
+  - "*/**/*.vue"
+  - "*/**/*.css"
+  - "*/**/*.scss"
+
+github:
+  - ".github/**/*"

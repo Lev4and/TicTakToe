@@ -1,0 +1,57 @@
+name: Docker Release Image Build/Push
+
+on:
+  create:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  vue-js-app-build:
+    name: vue-js-app image build and push
+    runs-on: ubuntu-latest
+    env:
+      PROJECT_SRC_DIR: tic-tak-toe-vue-js-app
+      DOCKER_IMAGE: docker.pkg.github.com/lev4and/tictaktoe/vue-js-app
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Login to docker.pkg.github.com
+        run: docker login docker.pkg.github.com -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and pull docker image
+        run: docker build -f $PROJECT_SRC_DIR/Dockerfile --pull -t $DOCKER_IMAGE:${GITHUB_REF#refs/*/} $PROJECT_SRC_DIR
+
+      - name: Build and pull docker latest image
+        run: docker build -f $PROJECT_SRC_DIR/Dockerfile --pull -t $DOCKER_IMAGE:latest $PROJECT_SRC_DIR
+
+      - name: Push docker image
+        run: docker push $DOCKER_IMAGE:${GITHUB_REF#refs/*/}
+
+      - name: Push docker latest image
+        run: docker push $DOCKER_IMAGE:latest
+
+  web-app-build:
+    name: web-app image build and push
+    runs-on: ubuntu-latest
+    env:
+      PROJECT_SRC_DIR: TicTakToe.WebApplication
+      DOCKER_IMAGE: docker.pkg.github.com/lev4and/tictaktoe/web-app
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Login to docker.pkg.github.com
+        run: docker login docker.pkg.github.com -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and pull docker image
+        run: docker build -f $PROJECT_SRC_DIR/Dockerfile --pull -t $DOCKER_IMAGE:${GITHUB_REF#refs/*/} .
+
+      - name: Build and pull docker latest image
+        run: docker build -f $PROJECT_SRC_DIR/Dockerfile --pull -t $DOCKER_IMAGE:latest .
+
+      - name: Push docker image
+        run: docker push $DOCKER_IMAGE:${GITHUB_REF#refs/*/}
+
+      - name: Push docker latest image
+        run: docker push $DOCKER_IMAGE:latest
